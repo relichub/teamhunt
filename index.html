@@ -1446,7 +1446,7 @@ for(const e of document.querySelectorAll('[data-bp-units]'))e.title='1 BP = '+Nu
 
 for(const e of document.querySelectorAll('[data-ammo-bp]'))e.title=({pt:'1 BP = 2.000 unidades',en:'1 BP = 2,000 units',es:'1 BP = 2.000 unidades',pl:'1 BP = 2,000 units'})[lang];
 
-for(const b of document.querySelectorAll('[data-lang]'))b.setAttribute('aria-pressed',String(b.dataset.lang===lang));observer.observe(document.body,{subtree:true,childList:true,characterData:true});}
+for(const b of document.querySelectorAll('[data-lang]')){const value=String(b.dataset.lang===lang);if(b.getAttribute('aria-pressed')!==value)b.setAttribute('aria-pressed',value);}observer.observe(document.body,{subtree:true,childList:true,characterData:true});}
 
 const observer=new MutationObserver(apply);
 
@@ -2014,7 +2014,7 @@ const trigger=document.createElement('button');trigger.type='button';trigger.cla
 
 group.classList.add('preview-language-dropdown');group.append(trigger,menu);
 
-function sync(){const selected=choices.find(b=>b.getAttribute('aria-pressed')==='true')||choices.find(b=>b.dataset.finalLang==='en');trigger.querySelector('img').src=selected.querySelector('img').src;trigger.querySelector('.preview-language-name').textContent=names[selected.dataset.finalLang];trigger.setAttribute('aria-label',({pt:'Selecionar idioma',en:'Choose language',es:'Elegir idioma',pl:'Wybierz język'})[selected.dataset.finalLang]);}
+function sync(){const selected=choices.find(b=>b.getAttribute('aria-pressed')==='true')||choices.find(b=>b.dataset.finalLang==='en');trigger.querySelector('img').src=selected.querySelector('img').src;const name=trigger.querySelector('.preview-language-name');if(name.textContent!==names[selected.dataset.finalLang])name.textContent=names[selected.dataset.finalLang];trigger.setAttribute('aria-label',({pt:'Selecionar idioma',en:'Choose language',es:'Elegir idioma',pl:'Wybierz język'})[selected.dataset.finalLang]);}
 
 function close(focus=false){menu.hidden=true;trigger.setAttribute('aria-expanded','false');if(focus)trigger.focus({preventScroll:true});}
 
